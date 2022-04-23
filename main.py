@@ -2,36 +2,30 @@ import sys
 import pygame
 
 
-BLACK = (0, 0, 0)
-WHITE = (200, 200, 200)
-WINDOW_HEIGHT = 400
-WINDOW_WIDTH = 400
-grid_width = 400 
+base  = 3
+side  = base*base
 
 
-def drawGrid():
-    blockSize = 40 #Set the size of the grid block
-    for x in range(9):
-        for y in range(9):
-            rect = pygame.Rect(x*blockSize, y*blockSize,
-                               blockSize, blockSize)
-            pygame.draw.rect(SCREEN, BLACK, rect, 1)
+
+# pattern for a baseline valid solution
+def pattern(r,c): 
+    return (base*(r%base)+r//base+c)%side
 
 def main():
-    global SCREEN, CLOCK
-    pygame.init()
-    SCREEN = pygame.display.set_mode((WINDOW_HEIGHT, WINDOW_WIDTH))
-    CLOCK = pygame.time.Clock()
-    SCREEN.fill(WHITE)
+    # SUDOKU SOLUTION BOARD
+    # randomize rows, columns and numbers (of valid base pattern)
+    from random import sample
+    def shuffle(s): return sample(s,len(s)) 
+    rBase = range(base) 
+    rows  = [ g*base + r for g in shuffle(rBase) for r in shuffle(rBase) ] 
+    cols  = [ g*base + c for g in shuffle(rBase) for c in shuffle(rBase) ]
+    nums  = shuffle(range(1,base*base+1))
 
-    while True:
-        drawGrid()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+    # produce board using randomized baseline pattern
+    board = [ [nums[pattern(r,c)] for c in cols] for r in rows ]
 
-        pygame.display.update()
+    for line in board: print(line)
+
 
 
 
