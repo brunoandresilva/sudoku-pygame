@@ -17,6 +17,8 @@ inserted_elem_color = (0, 0, 255)
 
 # grid that will be shown in the screen
 display_grid = [ [0 for c in range(0, 9)] for r in range(0, 9) ]
+ind_x, ind_y = 0, 0
+error_count = 0
 
 
 # randomize rows, columns and numbers (of valid base pattern)
@@ -39,12 +41,18 @@ def updateGrid(win, rectangle):
 
     pygame.draw.rect(win, (33, 232, 67), rectangle)
 
-    myfont = pygame.font.SysFont('Comic Sans MS', 35)
+    grid_font = pygame.font.SysFont('Comic Sans MS', 35)
     for i in range(0, len(display_grid[0])):
         for j in range(0, len(display_grid[0])):
             if(0 < display_grid[i][j] < 10):
-                value = myfont.render(str(display_grid[i][j]), True, grid_element_color)
+                value = grid_font.render(str(display_grid[i][j]), True, grid_element_color)
                 win.blit(value, ((j+1)*50 + 15, (i+1)*50 ))
+
+    # error count and timer
+
+    ui_font = pygame.font.SysFont('Comic Sans MS', 20)
+    err_count = ui_font.render(("Erros: " + str(error_count)), True, grid_element_color)
+    win.blit(err_count, (30, 10))
 
     pygame.display.update()
 
@@ -90,6 +98,7 @@ def drawGrid(board, win):
     pygame.display.update()
 
 def main():
+    global error_count
     # SUDOKU SOLUTION BOARD
     rBase = range(base) 
     rows  = [ g*base + r for g in shuffle(rBase) for r in shuffle(rBase) ] 
@@ -109,7 +118,7 @@ def main():
 
     while True:
         for e in pygame.event.get():
-            ind_x, ind_y = 0, 0
+            
             if e.type == pygame.QUIT:
                 pygame.quit()
                 return
@@ -118,12 +127,66 @@ def main():
                 x, y = pygame.mouse.get_pos()
                 ind_x, ind_y = int(x / 50 - 1), int(y / 50 - 1)
                 rectangle = pygame.Rect(((ind_x + 1) * 50), ((ind_y + 1) * 50), 48, 48)
-                # pygame.draw.rect(win, (33, 232, 67), rectangle)
                 updateGrid(win, rectangle)
                 pygame.display.update()
                 
             if e.type == pygame.KEYDOWN:
                 print("A key has been pressed")
+                if e.key == pygame.K_1:
+                    if board[ind_y][ind_x] == 1:
+                        display_grid[ind_y][ind_x] = 1
+                    else: 
+                        error_count += 1
+                    updateGrid(win, rectangle)
+                if e.key == pygame.K_2:
+                    if board[ind_y][ind_x] == 2:
+                        display_grid[ind_y][ind_x] = 2
+                    else: 
+                        error_count += 1
+                    updateGrid(win, rectangle)
+                if e.key == pygame.K_3:
+                    if board[ind_y][ind_x] == 3:
+                        display_grid[ind_y][ind_x] = 3
+                    else: 
+                        error_count += 1
+                    updateGrid(win, rectangle)
+                if e.key == pygame.K_4:
+                    if board[ind_y][ind_x] == 4:
+                        display_grid[ind_y][ind_x] = 4
+                    else: 
+                        error_count += 1
+                    updateGrid(win, rectangle)
+                if e.key == pygame.K_5:
+                    if board[ind_y][ind_x] == 5:
+                        display_grid[ind_y][ind_x] = 5
+                    else: 
+                        error_count += 1
+                    updateGrid(win, rectangle)
+                if e.key == pygame.K_6:
+                    if board[ind_y][ind_x] == 6:
+                        display_grid[ind_y][ind_x] = 6
+                    else: 
+                        error_count += 1
+                    updateGrid(win, rectangle)
+                if e.key == pygame.K_7:
+                    if board[ind_y][ind_x] == 7:
+                        display_grid[ind_y][ind_x] = 7
+                    else: 
+                        error_count += 1
+                    updateGrid(win, rectangle)
+                if e.key == pygame.K_8:
+                    if board[ind_y][ind_x] == 8:
+                        display_grid[ind_y][ind_x] = 8
+                    else: 
+                        error_count += 1
+                    updateGrid(win, rectangle)
+                if e.key == pygame.K_9:
+                    if board[ind_y][ind_x] == 9:
+                        display_grid[ind_y][ind_x] = 9
+                    else: 
+                        error_count += 1
+                    updateGrid(win, rectangle)
+
                 
                 
 
