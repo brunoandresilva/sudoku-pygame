@@ -1,3 +1,4 @@
+from cmath import rect
 from msvcrt import kbhit
 import sys
 import pygame
@@ -79,8 +80,6 @@ def main():
 
     
     while True:
-        
-        
         for e in pygame.event.get():
             ind_x, ind_y = 0, 0
             flag = False
@@ -88,64 +87,17 @@ def main():
                 pygame.quit()
                 return
             if e.type == pygame.MOUSEBUTTONUP:
-                flag = True
                 x, y = pygame.mouse.get_pos()
                 ind_x, ind_y = int(x / 50 - 1), int(y / 50 - 1)
                 print(x, y)
                 print(ind_x, ind_y)
                 # value = myfont.render(str(board[ind_y][ind_x]), True, inserted_elem_color)
-                # win.blit(value, ((ind_x+1)*50 + 15, (ind_y+1)*50 ))
-                # pygame.display.update()
+                pygame.draw.rect(win, (33, 232, 67), pygame.Rect(((ind_x + 1) * 50), ((ind_y + 1) * 50), 48, 48))
+                #win.blit(value, ((ind_x+1)*50 + 15, (ind_y+1)*50 ))
+                pygame.display.update()
+            if e.type == pygame.KEYDOWN:
+                print("A key has been pressed")
                 
-            if flag:
-                print("ENTREI")
-                keys = pygame.key.get_pressed()
-                if keys[pygame.K_1]:
-                    value = myfont.render('1', True, inserted_elem_color)
-                    win.blit(value, ((ind_x+1)*50 + 15, (ind_y+1)*50 ))
-                    pygame.display.update()
-                    flag = False
-                elif keys[pygame.K_2]:
-                    value = myfont.render('2', True, inserted_elem_color)
-                    win.blit(value, ((ind_x+1)*50 + 15, (ind_y+1)*50 ))
-                    pygame.display.update()
-                    flag = False
-                elif keys[pygame.K_3]:
-                    value = myfont.render('3', True, inserted_elem_color)
-                    win.blit(value, ((ind_x+1)*50 + 15, (ind_y+1)*50 ))
-                    pygame.display.update()
-                    flag = False
-                elif keys[pygame.K_4]:
-                    value = myfont.render('4', True, inserted_elem_color)
-                    win.blit(value, ((ind_x+1)*50 + 15, (ind_y+1)*50 ))
-                    pygame.display.update()
-                    flag = False
-                elif keys[pygame.K_5]:
-                    value = myfont.render('5', True, inserted_elem_color)
-                    win.blit(value, ((ind_x+1)*50 + 15, (ind_y+1)*50 ))
-                    pygame.display.update()
-                    flag = False
-                elif keys[pygame.K_6]:
-                    value = myfont.render('6', True, inserted_elem_color)
-                    win.blit(value, ((ind_x+1)*50 + 15, (ind_y+1)*50 ))
-                    pygame.display.update()
-                    flag = False
-                elif keys[pygame.K_7]:
-                    value = myfont.render('7', True, inserted_elem_color)
-                    win.blit(value, ((ind_x+1)*50 + 15, (ind_y+1)*50 ))
-                    pygame.display.update()
-                    flag = False
-                elif keys[pygame.K_8]:
-                    value = myfont.render('8', True, inserted_elem_color)
-                    win.blit(value, ((ind_x+1)*50 + 15, (ind_y+1)*50 ))
-                    pygame.display.update()
-                    flag = False
-                elif keys[pygame.K_9]:
-                    value = myfont.render('9', True, inserted_elem_color)
-                    win.blit(value, ((ind_x+1)*50 + 15, (ind_y+1)*50 ))
-                    pygame.display.update()
-                    flag = False
-
                 
 
     
