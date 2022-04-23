@@ -1,11 +1,14 @@
 import sys
 import pygame
+from random import sample
 
 
 base  = 3
 side  = base*base
 
-
+# randomize rows, columns and numbers (of valid base pattern)
+def shuffle(s): 
+    return sample(s,len(s)) 
 
 # pattern for a baseline valid solution
 def pattern(r,c): 
@@ -13,9 +16,6 @@ def pattern(r,c):
 
 def main():
     # SUDOKU SOLUTION BOARD
-    # randomize rows, columns and numbers (of valid base pattern)
-    from random import sample
-    def shuffle(s): return sample(s,len(s)) 
     rBase = range(base) 
     rows  = [ g*base + r for g in shuffle(rBase) for r in shuffle(rBase) ] 
     cols  = [ g*base + c for g in shuffle(rBase) for c in shuffle(rBase) ]
