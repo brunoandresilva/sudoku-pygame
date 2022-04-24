@@ -29,8 +29,17 @@ def shuffle(s):
 def pattern(r,c): 
     return (base*(r%base)+r//base+c)%side
 
-def updateGrid(win, rect_vertical, rect_horizontal):
+def updateGrid(win, rect_vertical, rect_horizontal, selected_number=0):
     win.fill(background_color)
+
+    # higlight the clicked cell and all cells with the same number
+    if selected_number != 0:
+        for x in range(0, len(display_grid)):
+            for y in range(0, len(display_grid)):
+                if selected_number == display_grid[y][x]:
+                    pygame.draw.rect(win, (118, 118, 118), pygame.Rect(((x + 1) * 50), ((y + 1) * 50), 50, 50))
+    pygame.draw.rect(win, (118, 118, 118), rect_vertical)
+    pygame.draw.rect(win, (118, 118, 118), rect_horizontal)
 
     for i in range(0, 10):
         if i % 3 == 0:
@@ -38,10 +47,6 @@ def updateGrid(win, rect_vertical, rect_horizontal):
             pygame.draw.line(win, (0, 0, 0), (50, 50 + 50*i), (500, 50 + 50*i), 4)
         pygame.draw.line(win, (0, 0, 0), (50 + 50*i, 50), (50 + 50*i, 500), 2)
         pygame.draw.line(win, (0, 0, 0), (50, 50 + 50*i), (500, 50 + 50*i), 2)
-
-    # higlight the clicked cell
-    pygame.draw.rect(win, (33, 232, 67), rect_vertical)
-    pygame.draw.rect(win, (33, 232, 67), rect_horizontal)
 
     grid_font = pygame.font.SysFont('Comic Sans MS', 35)
     for i in range(0, len(display_grid[0])):
@@ -75,7 +80,7 @@ def drawGrid(board, win):
 
     # choosing what numbers are actually being displayed in the beginning
     rand_coords = []        
-    while len(rand_coords) < 17:
+    while len(rand_coords) < 30:
         x = random.randint(0, 8)
         y = random.randint(0, 8)
         if (x, y) not in rand_coords:
@@ -129,9 +134,9 @@ def main():
                 x, y = pygame.mouse.get_pos()
                 ind_x, ind_y = int(x / 50 - 1), int(y / 50 - 1)
                 rectangle = pygame.Rect(((ind_x + 1) * 50), ((ind_y + 1) * 50), 48, 48)
-                rect_vertical = pygame.Rect(((ind_x + 1) * 50), 50, 48, 450)
-                rect_horizontal = pygame.Rect(50, ((ind_y + 1) * 50), 450, 48)
-                updateGrid(win, rect_vertical, rect_horizontal)
+                rect_vertical = pygame.Rect(((ind_x + 1) * 50), 50, 50, 450)
+                rect_horizontal = pygame.Rect(50, ((ind_y + 1) * 50), 450, 50)
+                updateGrid(win, rect_vertical, rect_horizontal, display_grid[ind_y][ind_x])
                 pygame.display.update()
                 
             if e.type == pygame.KEYDOWN:
