@@ -29,7 +29,7 @@ def shuffle(s):
 def pattern(r,c): 
     return (base*(r%base)+r//base+c)%side
 
-def updateGrid(win, rectangle):
+def updateGrid(win, rect_vertical, rect_horizontal):
     win.fill(background_color)
 
     for i in range(0, 10):
@@ -39,7 +39,9 @@ def updateGrid(win, rectangle):
         pygame.draw.line(win, (0, 0, 0), (50 + 50*i, 50), (50 + 50*i, 500), 2)
         pygame.draw.line(win, (0, 0, 0), (50, 50 + 50*i), (500, 50 + 50*i), 2)
 
-    pygame.draw.rect(win, (33, 232, 67), rectangle)
+    # higlight the clicked cell
+    pygame.draw.rect(win, (33, 232, 67), rect_vertical)
+    pygame.draw.rect(win, (33, 232, 67), rect_horizontal)
 
     grid_font = pygame.font.SysFont('Comic Sans MS', 35)
     for i in range(0, len(display_grid[0])):
@@ -127,7 +129,9 @@ def main():
                 x, y = pygame.mouse.get_pos()
                 ind_x, ind_y = int(x / 50 - 1), int(y / 50 - 1)
                 rectangle = pygame.Rect(((ind_x + 1) * 50), ((ind_y + 1) * 50), 48, 48)
-                updateGrid(win, rectangle)
+                rect_vertical = pygame.Rect(((ind_x + 1) * 50), 50, 48, 450)
+                rect_horizontal = pygame.Rect(50, ((ind_y + 1) * 50), 450, 48)
+                updateGrid(win, rect_vertical, rect_horizontal)
                 pygame.display.update()
                 
             if e.type == pygame.KEYDOWN:
@@ -137,55 +141,55 @@ def main():
                         display_grid[ind_y][ind_x] = 1
                     else: 
                         error_count += 1
-                    updateGrid(win, rectangle)
+                    updateGrid(win, rect_vertical, rect_horizontal)
                 if e.key == pygame.K_2:
                     if board[ind_y][ind_x] == 2:
                         display_grid[ind_y][ind_x] = 2
                     else: 
                         error_count += 1
-                    updateGrid(win, rectangle)
+                    updateGrid(win, rect_vertical, rect_horizontal)
                 if e.key == pygame.K_3:
                     if board[ind_y][ind_x] == 3:
                         display_grid[ind_y][ind_x] = 3
                     else: 
                         error_count += 1
-                    updateGrid(win, rectangle)
+                    updateGrid(win, rect_vertical, rect_horizontal)
                 if e.key == pygame.K_4:
                     if board[ind_y][ind_x] == 4:
                         display_grid[ind_y][ind_x] = 4
                     else: 
                         error_count += 1
-                    updateGrid(win, rectangle)
+                    updateGrid(win, rect_vertical, rect_horizontal)
                 if e.key == pygame.K_5:
                     if board[ind_y][ind_x] == 5:
                         display_grid[ind_y][ind_x] = 5
                     else: 
                         error_count += 1
-                    updateGrid(win, rectangle)
+                    updateGrid(win, rect_vertical, rect_horizontal)
                 if e.key == pygame.K_6:
                     if board[ind_y][ind_x] == 6:
                         display_grid[ind_y][ind_x] = 6
                     else: 
                         error_count += 1
-                    updateGrid(win, rectangle)
+                    updateGrid(win, rect_vertical, rect_horizontal)
                 if e.key == pygame.K_7:
                     if board[ind_y][ind_x] == 7:
                         display_grid[ind_y][ind_x] = 7
                     else: 
                         error_count += 1
-                    updateGrid(win, rectangle)
+                    updateGrid(win, rect_vertical, rect_horizontal)
                 if e.key == pygame.K_8:
                     if board[ind_y][ind_x] == 8:
                         display_grid[ind_y][ind_x] = 8
                     else: 
                         error_count += 1
-                    updateGrid(win, rectangle)
+                    updateGrid(win, rect_vertical, rect_horizontal)
                 if e.key == pygame.K_9:
                     if board[ind_y][ind_x] == 9:
                         display_grid[ind_y][ind_x] = 9
                     else: 
                         error_count += 1
-                    updateGrid(win, rectangle)
+                    updateGrid(win, rect_vertical, rect_horizontal)
 
                 
                 
