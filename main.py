@@ -16,7 +16,7 @@ ind_x, ind_y = 0, 0
 error_count = 0
 
 # DIFFICULTY
-difficulty = 80      # (IMPORTANT!) ALWAYS KEEP THIS VARIABLE BETWEEN 17-80 (17 IS THE HARDEST, 80 IS THE EASIEST)
+difficulty = 40      # (IMPORTANT!) ALWAYS KEEP THIS VARIABLE BETWEEN 17-80 (17 IS THE HARDEST, 80 IS THE EASIEST)
 
 
 # randomize rows, columns and numbers (of valid base pattern)
@@ -115,8 +115,6 @@ def end_game(win):
     global error_count
     global display_grid
     print("Congratulations! You finished with " + str(error_count) + " errors.")
-    error_count = 0
-    display_grid = [ [0 for c in range(0, 9)] for r in range(0, 9) ]
 
     # Changing opacity of screen
     s = pygame.Surface((width, width))
@@ -134,6 +132,9 @@ def end_game(win):
     pygame.draw.circle(win, (0, 0, 0), ((width / 2), (width / 2) + 55), 25)
     win.blit(image, ((width / 2) - 25, (width / 2) + 30))
     pygame.display.update()
+
+    error_count = 0
+    display_grid = [ [0 for c in range(0, 9)] for r in range(0, 9) ]
     
     flag = True
 
