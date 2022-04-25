@@ -1,11 +1,6 @@
 from asyncio.windows_events import NULL
-from cmath import rect
-from msvcrt import kbhit
-import sys
-import pygame
 from random import sample
-import random
-import keyboard
+import pygame, random, math
 
 
 base  = 3
@@ -21,7 +16,7 @@ ind_x, ind_y = 0, 0
 error_count = 0
 
 # DIFFICULTY
-difficulty = 30      # (IMPORTANT!) ALWAYS KEEP THIS VARIABLE BETWEEN 17-80 (17 IS THE HARDEST, 80 IS THE EASIEST)
+difficulty = 80      # (IMPORTANT!) ALWAYS KEEP THIS VARIABLE BETWEEN 17-80 (17 IS THE HARDEST, 80 IS THE EASIEST)
 
 
 # randomize rows, columns and numbers (of valid base pattern)
@@ -70,6 +65,7 @@ def updateGrid(win, ind_x, ind_y):
     err_count = ui_font.render(("Erros: " + str(error_count)), True, grid_element_color)
     win.blit(err_count, (30, 10))
 
+
     pygame.display.update()
 
 def drawGrid(board, win):
@@ -115,13 +111,47 @@ def drawGrid(board, win):
     pygame.display.update()
 
 
-def end_game():
+def end_game(win):
     global error_count
     global display_grid
     print("Congratulations! You finished with " + str(error_count) + " errors.")
     error_count = 0
     display_grid = [ [0 for c in range(0, 9)] for r in range(0, 9) ]
-    main()
+
+    # Changing opacity of screen
+    s = pygame.Surface((width, width))
+    s.set_alpha(210)
+    s.fill((background_color))
+    win.blit(s, (0, 0))
+
+    # Text in the center screen
+    myfont = pygame.font.SysFont('Comic Sans MS', 35)
+    text = myfont.render(("You win with " + str(error_count) + " errors!"), True, (0, 0, 0))
+    text_rect = text.get_rect(center=(width/2, width/2))
+    win.blit(text, text_rect)
+    image = pygame.image.load(r'assets\refresh.png')
+    image = pygame.transform.scale(image, (50, 50))
+    pygame.draw.circle(win, (0, 0, 0), ((width / 2), (width / 2) + 55), 25)
+    win.blit(image, ((width / 2) - 25, (width / 2) + 30))
+    pygame.display.update()
+    
+    flag = True
+
+    while flag:
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                pygame.quit()
+            # checks if mouse is clicked
+            if e.type == pygame.MOUSEBUTTONUP:
+                # check the coordinates
+                mouse = pygame.mouse.get_pos()
+                x = mouse[0]
+                y = mouse[1]
+                sqx = (x - (width / 2))**2
+                sqy = (y - ((width / 2) + 55))**2
+                if math.sqrt(sqx + sqy) < 25:
+                    flag = False
+                    main()
 
 def solution_board():
     # SUDOKU SOLUTION BOARD
@@ -165,7 +195,8 @@ def main():
                     if board[ind_y][ind_x] == 1:
                         display_grid[ind_y][ind_x] = 1
                         if display_grid == board:
-                            end_game()
+                            updateGrid(win, ind_x, ind_y)
+                            end_game(win)
                             flag = False
                     else: 
                         error_count += 1
@@ -174,7 +205,8 @@ def main():
                     if board[ind_y][ind_x] == 2:
                         display_grid[ind_y][ind_x] = 2
                         if display_grid == board:
-                            end_game()
+                            updateGrid(win, ind_x, ind_y)
+                            end_game(win)
                             flag = False
                     else: 
                         error_count += 1
@@ -183,7 +215,8 @@ def main():
                     if board[ind_y][ind_x] == 3:
                         display_grid[ind_y][ind_x] = 3
                         if display_grid == board:
-                            end_game()
+                            updateGrid(win, ind_x, ind_y)
+                            end_game(win)
                             flag = False
                     else: 
                         error_count += 1
@@ -192,7 +225,8 @@ def main():
                     if board[ind_y][ind_x] == 4:
                         display_grid[ind_y][ind_x] = 4
                         if display_grid == board:
-                            end_game()
+                            updateGrid(win, ind_x, ind_y)
+                            end_game(win)
                             flag = False
                     else: 
                         error_count += 1
@@ -201,7 +235,8 @@ def main():
                     if board[ind_y][ind_x] == 5:
                         display_grid[ind_y][ind_x] = 5
                         if display_grid == board:
-                            end_game()
+                            updateGrid(win, ind_x, ind_y)
+                            end_game(win)
                             flag = False
                     else: 
                         error_count += 1
@@ -210,7 +245,8 @@ def main():
                     if board[ind_y][ind_x] == 6:
                         display_grid[ind_y][ind_x] = 6
                         if display_grid == board:
-                            end_game()
+                            updateGrid(win, ind_x, ind_y)
+                            end_game(win)
                             flag = False
                     else: 
                         error_count += 1
@@ -219,7 +255,8 @@ def main():
                     if board[ind_y][ind_x] == 7:
                         display_grid[ind_y][ind_x] = 7
                         if display_grid == board:
-                            end_game()
+                            updateGrid(win, ind_x, ind_y)
+                            end_game(win)
                             flag = False
                     else: 
                         error_count += 1
@@ -228,7 +265,8 @@ def main():
                     if board[ind_y][ind_x] == 8:
                         display_grid[ind_y][ind_x] = 8
                         if display_grid == board:
-                            end_game()
+                            updateGrid(win, ind_x, ind_y)
+                            end_game(win)
                             flag = False
                     else: 
                         error_count += 1
@@ -237,11 +275,14 @@ def main():
                     if board[ind_y][ind_x] == 9:
                         display_grid[ind_y][ind_x] = 9
                         if display_grid == board:
-                            end_game()
+                            updateGrid(win, ind_x, ind_y)
+                            end_game(win)
                             flag = False
                     else: 
                         error_count += 1
                     updateGrid(win, ind_x, ind_y)
+        
+        
 
 def init():
     pygame.init()
